@@ -23,6 +23,14 @@ func set_esta_disparando(disparando:bool) -> void:
 
 
 #Metodos
+func _ready() -> void:
+	almacenar_puntos_disparo()
+	timer_enfriamiento.wait_time = cadencia_disparo
+
+func _process(delta: float) -> void:
+	if esta_disparando and esta_enfriado:
+		disparar()
+		
 func disparar() -> void:
 	esta_enfriado = false
 	disparo_sfx.play()
@@ -35,20 +43,12 @@ func disparar() -> void:
 			velocidad_proyectil,
 			danio_proyectil
 			)
-	print("pew pew estoy disparando")
+		Eventos.emit_signal("disparo", new_proyectil)
 
 
 func _on_TimerEnfriamiento_timeout() -> void:
 	esta_enfriado = true
 
-func _ready() -> void:
-	almacenar_puntos_disparo()
-	timer_enfriamiento.wait_time = cadencia_disparo
-	
-func _process(delta: float) -> void:
-	if esta_disparando and esta_enfriado:
-		disparar()
-		
 
 ## Metodos custom
 func almacenar_puntos_disparo() -> void:

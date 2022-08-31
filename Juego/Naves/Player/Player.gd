@@ -19,13 +19,12 @@ func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		#el agregado de empuje.rotated(rotation) nos permite que la nave gire y avance. sino gira y se mueve en el plano horizontal.
 		apply_torque_impulse(dir_rotacion * potencia_rotacion)
 
-# Called when the node enters the scene tree for the first time.
-func _ready():
-	pass # Replace with function body.
 
 func _process(delta: float) -> void:
 	player_input()
 	
+	
+#Metodos Custom
 func player_input() -> void:
 	#Empuje
 	empuje = Vector2.ZERO

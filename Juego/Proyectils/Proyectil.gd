@@ -23,3 +23,7 @@ func _ready() -> void:
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 #func _process(delta: float) -> void:
 #	pass
+
+
+func _on_VisibilityNotifier2D_screen_exited() -> void:
+	queue_free()	#esto es para que los proyectiles desaparezcan

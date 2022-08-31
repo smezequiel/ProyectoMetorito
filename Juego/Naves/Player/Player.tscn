@@ -24,6 +24,8 @@ position = Vector2( -1.58918, 0.794601 )
 shape = SubResource( 1 )
 
 [node name="Canion" parent="." instance=ExtResource( 4 )]
+cadencia_disparo = 0.25
+velocidad_proyectil = 1600
 
 [node name="PuntoIzquierdo" parent="Canion" index="0"]
 position = Vector2( 0, -33 )
@@ -33,5 +35,6 @@ position = Vector2( 0, 33 )
 
 [node name="DisparoSFX" parent="Canion" index="2"]
 position = Vector2( 0, -2.64865 )
+[connection signal="timeout" from="Canion/TimerEnfriamiento" to="Canion" method="_on_TimerEnfriamiento_timeout"]
 
 [editable path="Canion"]
