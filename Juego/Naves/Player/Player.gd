@@ -3,8 +3,8 @@ class_name Player
 extends RigidBody2D
 
 #Atributos export
-export var potencia_motor:int = 400		#export era para que podamos modificarlo en la pagina del personaje
-export var potencia_rotacion:int = 1200
+export var potencia_motor:int = 200		#export era para que podamos modificarlo en la pagina del personaje
+export var potencia_rotacion:int = 280
 export var estela_maxima:int = 150
 
 #Atributos
@@ -17,6 +17,9 @@ onready var canion:Canion = $Canion
 onready var laser:RayoLaser = $LaserBeam2D
 onready var estela:Estela = $EstelaPuntoInicio/Trail2D
 onready var colisionador:CollisionShape2D = $CollisionShape2D
+
+# Enums
+enum ESTADO {SPAWN, VIVO, INVENCIBLE, MUERTO}
 
 
 #Metodos 
@@ -40,8 +43,8 @@ func _unhandled_input(event: InputEvent) -> void:
 	elif event.is_action_pressed("mover atras"):
 		estela.set_max_points(0)
 
-# Enums
-enum ESTADO {SPAWN, VIVO, INVENCIBLE, MUERTO}
+func destruir() -> void:
+	controlador_estados(ESTADO.MUERTO)
 
 func _integrate_forces(state: Physics2DDirectBodyState) -> void:
 		apply_central_impulse(empuje.rotated(rotation))		#si lo dejamos como estaba, la nave se movia horizontal. Entonces rotamos la nave
@@ -68,6 +71,7 @@ func controlador_estados (nuevo_estado:int) -> void:
 		ESTADO.MUERTO:
 			colisionador.set_deferred("disabled", true)
 			canion.set_puede_disparar(true)	
+			Eventos.emit_signal("nave_destruida", global_position, 3)
 			queue_free()
 		_:
 			printerr("Error de estado")
